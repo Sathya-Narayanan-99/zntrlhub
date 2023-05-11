@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="node_modules/device-uuid/lib/device-uuid.js" type="text/javascript"></script>
+	
+	<style>
+            body { text-align: center; }
+
+            h1, h3 { font-family: Arial; }
+
+            mark { font-size: large; }
+    </style>
+</head>
+<body>
+    
+  <h1>Time on Page</h1>
+  <h3>This code example can be used to determine the amount of time (in seconds) user spent on the page, before he closes it.</h3>
+
+  <p><code><a href="https://topapi.free.beeceptor.com">  </a></code> </p>
+  <p>You can verify if the requests are being made here: <code><a href="https://beeceptor.com/console/topapi">https://beeceptor.com/console/topapi</a></code></p>
+
+  <mark>The JavaScript API/feature which is used here is - <a href="https://developer.mozilla.org/en-US/docs/Web/API/Beacon_API">Beacon API</a>, which helps to send AJAX requests even after the page is unloaded</mark>
+  <button class="box zntrlBtn" name="add-to-cart">Box 1</button>
+  <button class="box zntrlBtn">Box 2</button>
+  <div class="box zntrlBtn"></div>
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+</body>
+
+<script>
+ /*   
+const uuid = new DeviceUUID().get();
+document.write(uuid);
+const deviceType = () => {
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        return "tablet";
+    }
+    else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+        return "mobile";
+    }
+    return "desktop";
+};
+
+console.log(deviceType());
+const country =  geoplugin_countryName();
+//console.log("Country Code: ", geoplugin_countryCode());
+const state = geoplugin_region();
+const city = geoplugin_city();
+const loc = `${city} , ${state} , ${country}`;
+//console.log(loc);
+let ip = '';
+fetch('https://api.ipify.org?format=json').then(function(response) {
+	response.json().then(jsonData => {
+		ip = response.ip;
+  });
+})
+fetch('https://ipapi.co/'+ip+'/json/')
+.then(function(response) {
+  response.json().then(jsonData => {
+    console.log(jsonData);
+  });
+})
+.catch(function(error) {
+  console.log(error)
+});*/
+
+/*
+console.log(uuid);
+console.log("Cookies: " + navigator.cookieEnabled);
+console.log("Browser Language: " + navigator.browserLanguage);
+console.log("Language: " + navigator.language);
+console.log("Platform: " + navigator.platform);
+console.log("Connection Speed: " + navigator.connectionSpeed);
+console.log("User Agent: " + navigator.userAgent);
+console.log("Webdriver: " + navigator.webdriver);
+console.log(navigator.geolocation);
+
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+// function success(pos) {
+//   const crd = pos.coords;
+
+//    console.log('Your current position is:');
+//    console.log(`Latitude : ${crd.latitude}`);
+//    console.log(`Longitude: ${crd.longitude}`);
+//    console.log(`More or less ${crd.accuracy} meters.`);
+//   return crd.latitude;
+// }
+
+ let latitude = '';
+ let longitude='';
+const success = (pos) =>{
+    const crd = pos.coords;
+    latitude = crd.latitude;
+    longitude = crd.longitude;
+    
+}
+
+function error(err) {
+  console.log(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+setTimeout(() => {
+    document.write("latitude : "+latitude+"<br>"+"Longitude : "+longitude)
+}, 2000);*/
+
+/*
+    const addtocart = document.querySelectorAll('.box');
+
+    addtocart.forEach(cart => {
+    cart.addEventListener('click', function handleClick(event) {
+        //console.log('add to cart button is clicked', event);
+        navigator.sendBeacon("http://localhost/user_track/file.php?button_clicked="+Number(1)+"&uuid="+uuid)
+    });
+    });
+
+    let page = window.location.href;
+    let timeSpentScrolling = 0;
+
+    let isHalted = false;
+    let haltedStartTime, haltedEndTime;
+    let totalHaltedTime = 0;
+
+    const update_halt_state = () => {
+      if (isHalted) {
+        isHalted = false;
+        haltedEndTime = new Date().getTime()
+        totalHaltedTime += (haltedEndTime - haltedStartTime) / 1000
+      } else {
+        isHalted = true;
+        haltedStartTime = new Date().getTime()
+      }
+    }
+
+    // Listen for scroll events
+    window.addEventListener('scroll', () => {
+      timeSpentScrolling += 1.8;
+
+      update_halt_state()
+    });
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const start = new Date().getTime();
+
+      // AVERAGE SCROLLING INTERVAL - 39 seconds
+      setInterval(() => {
+        if (new Date().getTime() - start > 39000) {
+          update_halt_state()
+        }
+      }, 39000)
+
+      window.addEventListener("beforeunload", () => {
+        const end = new Date().getTime();
+
+        update_halt_state()
+
+        const totalTime = ((end - start) / 1000) - (timeSpentScrolling / 1000) - totalHaltedTime;
+        console.log(totalTime);
+        url_data = `totalTime=${totalTime}&uuid=${uuid}&page_url=${page}&location=${loc}`;
+        //navigator.sendBeacon("http://localhost/user_track/file.php?"+url_data)
+      });
+
+    });
+    */
+</script>
+<script src="./index.js" type="text/javascript"></script>
+</html>
