@@ -17,9 +17,9 @@ router.post("/create", async(req, res) => {
     }
     console.log(req.body);
   //get the data
+  const siteUrl   = req.header("Origin");
   const cust_name = req.body.cust_name;
   const wa_number = req.body.wa_number;
-  const siteUrl   = req.body.siteUrl;
   const uuid      = req.body.uuid;
     
   console.log(siteUrl);
